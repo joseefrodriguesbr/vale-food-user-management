@@ -3,7 +3,15 @@ package br.inatel.pos.dm111.vfu.api.core;
 public enum AppErrorCode {
 
     CONFLICTED_USER_EMAIL("user.email.conflicted", "Provided email is already in use!", 409),
-    USER_NOT_FOUND("user.not.found", "User was not found.", 404);
+    USER_NOT_FOUND("user.not.found", "User was not found.", 404),
+    RESTAURANT_NOT_FOUND("restaurant.not.found", "Restaurant was not found.", 404),
+    INVALID_USER_TYPE("user.invalid.type", "Provided user is not supported for the current operation.", 403),
+    INVALID_USER_CREDENTIALS("user.invaliad.credentials", "Provided credentials are not valid!", 401),
+
+    INTERNAL_DATABASE_COMMUNICATION_ERROR("internal.error", "Failure to communicate with repository.", 500);
+
+
+
     private String code;
     private String message;
     private int status;

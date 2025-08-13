@@ -1,54 +1,121 @@
 package br.inatel.pos.dm111.vfu.api.restaurant.controller;
 
-import br.inatel.pos.dm111.vfu.api.core.ApiException;
-import br.inatel.pos.dm111.vfu.api.restaurant.RestaurantRequest;
-import br.inatel.pos.dm111.vfu.api.restaurant.RestaurantResponse;
-import br.inatel.pos.dm111.vfu.api.restaurant.service.RestaurantService;
-import br.inatel.pos.dm111.vfu.api.user.UserRequest;
-import br.inatel.pos.dm111.vfu.api.user.UserResponse;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import br.inatel.pos.dm111.vfu.api.core.ApiException;
+import br.inatel.pos.dm111.vfu.api.core.AppError;
+import br.inatel.pos.dm111.vfu.api.restaurant.RestaurantRequest;
+import br.inatel.pos.dm111.vfu.api.restaurant.RestaurantResponse;
+import br.inatel.pos.dm111.vfu.api.restaurant.service.RestaurantService;
 
 @RestController
 @RequestMapping("/valefood/restaurants")
-public class RestaurantController {
+public class RestaurantController
+{
+	private static final Logger log = LoggerFactory.getLogger(RestaurantController.class);
 
-    private static final Logger log = LoggerFactory.getLogger(RestaurantController.class);
+	private final RestaurantRequestValidator validator;
 
-    private final RestaurantRequestValidator validator;
-    private final RestaurantService service;
+	private final RestaurantService service;
 
-    public RestaurantController(RestaurantRequestValidator validator, RestaurantService service) {
-        this.validator = validator;
-        this.service = service;
+	public RestaurantController(RestaurantRequestValidator validator, RestaurantService service)
+	{
+		this.validator = validator;
+		this.service = service;
+	}
+
+	@GetMapping
+	public ResponseEntity<List<RestaurantResponse>> getAllRestaurants() throws ApiException
+	{
+		log.debug("Received request to list all restaurants");
+		var response = service.searchRestaurants();
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+
+	@GetMapping(value = "/{restaurantId}")
+	public ResponseEntity<RestaurantResponse> getUserById(@PathVariable("restaurantId")
+	String id) throws ApiException
+	{
+		log.debug("Received request to list an restaurant by id: {}", id);
+		var response = service.searchRestaurant(id);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+
+	
+	/*-
+	 [
+    {
+        "id": "519254fe-fea6-4d2d-b4f7-65a5a8e225e9",
+        "name": null,
+        "address": "Rua Ceará",
+        "userId": "1234",
+        "categories": [
+            "REGULAR1"
+        ],
+        "products": [
+            {
+                "id": "be4380d2-37b3-4214-b339-104919d11d18",
+                "name": "Produto1",
+                "description": "Descrição",
+                "category": "pizza",
+                "price": 8.45
+            }
+        ]
     }
+]
+	 */
+	@PostMapping
+	public ResponseEntity<RestaurantResponse> postRestaurant(@RequestBody
+	RestaurantRequest request, BindingResult bindingResult) throws ApiException
+	{
+		log.debug("Received request to create a new user...");
+		validateRequest(request, bindingResult);
+		var response = service.createRestaurant(request);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
 
-    @GetMapping
-    public ResponseEntity<List<RestaurantResponse>> getAllRestaurants() {
-        log.debug("Received request to list all restaurants");
+	@PutMapping(value = "/{restaurantId}")
+	public ResponseEntity<RestaurantResponse> putUser(@RequestBody
+	RestaurantRequest request, @PathVariable("restaurantId")
+	String restaurantId, BindingResult bindingResult) throws ApiException
+	{
+		log.debug("Received request to update an user...");
+		validateRequest(request, bindingResult);
+		var response = service.updateRestaurant(request, restaurantId);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
 
-        var response = service.searchRestaurants();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(response);
-    }
+	@DeleteMapping(value = "/{restaurantId}")
+	public ResponseEntity<List<RestaurantResponse>> deleteRestaurant(@PathVariable("restaurantId")
+	String id) throws ApiException
+	{
+		log.debug("Received request to delete an restaurant: id {}", id);
+		service.removeRestaurant(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
 
-    @PostMapping
-    public ResponseEntity<RestaurantResponse> postRestaurant(@RequestBody RestaurantRequest request,
-                                                 BindingResult bindingResult) throws ApiException {
-        log.debug("Received request to create a new user...");
-
-        //validateUserRequest(request, bindingResult);
-        var response = service.createRestaurant(request);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
-    }
+	private void validateRequest(RestaurantRequest request, BindingResult bindingResult) throws ApiException
+	{
+		ValidationUtils.invokeValidator(validator, request, bindingResult);
+		if (bindingResult.hasErrors())
+		{
+			var errors = bindingResult.getFieldErrors().stream().map(fe -> new AppError(fe.getCode(), fe.getDefaultMessage())).toList();
+			throw new ApiException(HttpStatus.BAD_REQUEST, errors);
+		}
+	}
 }
