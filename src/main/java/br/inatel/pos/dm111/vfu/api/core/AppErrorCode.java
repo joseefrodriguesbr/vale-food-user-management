@@ -2,8 +2,8 @@ package br.inatel.pos.dm111.vfu.api.core;
 
 public enum AppErrorCode {
 
-    CONFLICTED_USER_EMAIL("user.email.conflicted", "Provided email is already in use!", 409);
-
+    CONFLICTED_USER_EMAIL("user.email.conflicted", "Provided email is already in use!", 409),
+    USER_NOT_FOUND("user.not.found", "User was not found.", 404);
     private String code;
     private String message;
     private int status;
