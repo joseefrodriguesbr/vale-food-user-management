@@ -7,7 +7,7 @@ public enum AppErrorCode {
     RESTAURANT_NOT_FOUND("restaurant.not.found", "Restaurant was not found.", 404),
     INVALID_USER_TYPE("user.invalid.type", "Provided user is not supported for the current operation.", 403),
     INVALID_USER_CREDENTIALS("user.invalid.credentials", "Provided credentials are not valid!", 401),
-
+    OPERATION_NOT_SUPPORTED("operation.not.supported", "Operation not supported by the given user type.", 403),
     INTERNAL_DATABASE_COMMUNICATION_ERROR("internal.error", "Failure to communicate with repository.", 500);
 
 
