@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() throws ApiException {
         log.debug("Received request to list all users");
 
         var response = service.searchUsers();
@@ -61,7 +61,7 @@ public class UserController {
                                                  BindingResult bindingResult) throws ApiException {
         log.debug("Received request to create a new user...");
 
-        validateUserRequest(request, bindingResult);
+        validateRequest(request, bindingResult);
         var response = service.createUser(request);
 
         return ResponseEntity
@@ -75,7 +75,7 @@ public class UserController {
                                                 BindingResult bindingResult) throws ApiException {
         log.debug("Received request to update an user...");
 
-        validateUserRequest(request, bindingResult);
+        validateRequest(request, bindingResult);
 
         var response = service.updateUser(request, userId);
 
@@ -85,7 +85,8 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{userId}")
-    public ResponseEntity<List<UserResponse>> deleteUser(@PathVariable("userId") String id) {
+    public ResponseEntity<List<UserResponse>> deleteUser(@PathVariable("userId") String id)
+            throws ApiException {
         log.debug("Received request to delete an user: id {}", id);
 
         service.removeUser(id);
@@ -94,7 +95,7 @@ public class UserController {
                 .build();
     }
 
-    private void validateUserRequest(UserRequest request, BindingResult bindingResult) throws ApiException {
+    private void validateRequest(UserRequest request, BindingResult bindingResult) throws ApiException {
         ValidationUtils.invokeValidator(validator, request, bindingResult);
 
         if (bindingResult.hasErrors()) {

@@ -84,7 +84,7 @@ public class RestaurantService {
         if (restaurantOpt.isPresent()) {
             try {
                 restaurantRepository.delete(id);
-            } catch (Exception e) {
+            } catch (ExecutionException | InterruptedException e) {
                 log.error("Failed to delete a restaurant from DB by id {}.", id, e);
                 throw new ApiException(AppErrorCode.INTERNAL_DATABASE_COMMUNICATION_ERROR);
             }
@@ -161,7 +161,7 @@ public class RestaurantService {
     private List<Restaurant> retrieveRestaurants() throws ApiException {
         try {
             return restaurantRepository.getAll();
-        } catch (Exception e) {
+        } catch (ExecutionException | InterruptedException e) {
             log.error("Failed to read all restaurants from DB.", e);
             throw new ApiException(AppErrorCode.INTERNAL_DATABASE_COMMUNICATION_ERROR);
         }
@@ -170,7 +170,7 @@ public class RestaurantService {
     private Optional<Restaurant> retrieveRestaurantById(String id) throws ApiException {
         try {
             return restaurantRepository.getById(id);
-        } catch (Exception e) {
+        } catch (ExecutionException | InterruptedException e) {
             log.error("Failed to read a restaurant from DB by id {}.", id, e);
             throw new ApiException(AppErrorCode.INTERNAL_DATABASE_COMMUNICATION_ERROR);
         }
@@ -179,7 +179,7 @@ public class RestaurantService {
     private Optional<User> retrieveUserById(String id) throws ApiException {
         try {
             return userRepository.getById(id);
-        } catch (Exception e) {
+        } catch (ExecutionException | InterruptedException e) {
             log.error("Failed to read an user from DB by id {}.", id, e);
             throw new ApiException(AppErrorCode.INTERNAL_DATABASE_COMMUNICATION_ERROR);
         }
