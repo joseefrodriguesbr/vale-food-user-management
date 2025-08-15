@@ -7,14 +7,12 @@ import br.inatel.pos.dm111.vfu.api.user.UserRequest;
 import br.inatel.pos.dm111.vfu.api.user.UserResponse;
 import br.inatel.pos.dm111.vfu.persistence.user.User;
 import br.inatel.pos.dm111.vfu.persistence.user.UserRepository;
+import br.inatel.pos.dm111.vfu.publisher.AppPublisher;
+import br.inatel.pos.dm111.vfu.publisher.UserPubSubPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,10 +25,12 @@ public class UserService {
 
     private final UserRepository repository;
     private final PasswordEncryptor encryptor;
+    private final AppPublisher userPublisher;
 
-    public UserService(UserRepository repository, PasswordEncryptor encryptor) {
+    public UserService(UserRepository repository, PasswordEncryptor encryptor, AppPublisher userPublisher) {
         this.repository = repository;
         this.encryptor = encryptor;
+        this.userPublisher = userPublisher;
     }
 
     public UserResponse createUser(UserRequest request) throws ApiException {
@@ -41,6 +41,11 @@ public class UserService {
         repository.save(user);
         log.info("User was successfully created. Id: {}", user.id());
 
+        var published = userPublisher.publishCreated(user);
+        if (!published) {
+            // TODO: either decide to make a rollback or alarm to retry later or resync users
+            log.error("User created was not published. Needs to be re published later on... User Id: {}", user.id());
+        }
         return buildUserResponse(user);
     }
 

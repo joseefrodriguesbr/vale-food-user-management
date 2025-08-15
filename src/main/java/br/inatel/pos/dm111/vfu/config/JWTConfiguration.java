@@ -17,38 +17,35 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 
 @Configuration
-public class JWTConfiguration {
-
-    @Value("${vale-food.auth.public.key}")
-    private String publicKey;
-
+public class JWTConfiguration
+{
+	@Value("${vale-food.auth.public.key}")
+	private String publicKey;
+	
     @Value("${vale-food.auth.private.key}")
     private String privateKey;
 
-    @Bean
-    public PublicKey loadPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        var keyBytes = Base64.getDecoder().decode(publicKey);
-        var keySpec = new X509EncodedKeySpec(keyBytes);
-        var keyFactory = KeyFactory.getInstance("RSA");
+	@Bean
+	public PublicKey loadPublicKey() throws NoSuchAlgorithmException, InvalidKeySpecException
+	{
+		var keyBytes = Base64.getDecoder().decode(publicKey);
+		var keySpec = new X509EncodedKeySpec(keyBytes);
+		var keyFactory = KeyFactory.getInstance("RSA");
+		return keyFactory.generatePublic(keySpec);
+	}
 
-        return keyFactory.generatePublic(keySpec);
-    }
+	@Bean
+	public PrivateKey loadPrivateKey() throws NoSuchAlgorithmException, InvalidKeySpecException
+	{
+		var keyBytes = Base64.getDecoder().decode(privateKey);
+		var keySpec = new PKCS8EncodedKeySpec(keyBytes);
+		var keyFactory = KeyFactory.getInstance("RSA");
+		return keyFactory.generatePrivate(keySpec);
+	}
 
-    @Bean
-    public PrivateKey loadPrivateKey() throws NoSuchAlgorithmException, InvalidKeySpecException {
-        var keyBytes = Base64.getDecoder().decode(privateKey);
-        var keySpec = new PKCS8EncodedKeySpec(keyBytes);
-        var keyFactory = KeyFactory.getInstance("RSA");
-
-        return keyFactory.generatePrivate(keySpec);
-    }
-    
-
-    @Bean
-    public JwtParser jwtParser(PublicKey publicKey) {
-        return Jwts.parser()
-                .verifyWith(publicKey)
-                .build();
-    }
-    
+	@Bean
+	public JwtParser jwtParser(PublicKey publicKey)
+	{
+		return Jwts.parser().verifyWith(publicKey).build();
+	}
 }
