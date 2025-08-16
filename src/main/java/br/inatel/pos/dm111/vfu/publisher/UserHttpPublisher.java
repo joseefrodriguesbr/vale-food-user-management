@@ -15,6 +15,9 @@ public class UserHttpPublisher implements AppPublisher {
 
     @Value("${vale-food.auth.url}")
     private String authUrl;
+    
+    @Value("${vale-food.promo.url}")
+    private String promoUrl;
 
     private final RestTemplate restTemplate;
 
@@ -28,6 +31,7 @@ public class UserHttpPublisher implements AppPublisher {
 
         restTemplate.postForObject(restaurantUrl, event.event(), UserEvent.class);
         restTemplate.postForObject(authUrl, event.event(), UserEvent.class);
+        restTemplate.postForObject(promoUrl, event.event(), UserEvent.class);
 
         return true;
     }

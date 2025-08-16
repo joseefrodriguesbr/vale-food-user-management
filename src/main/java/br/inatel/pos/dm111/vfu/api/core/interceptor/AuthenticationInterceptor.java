@@ -113,10 +113,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             }
         }
 
-        if (appJwtToken.uri().startsWith("/valefood/users")) {
-            log.info("Read all restaurants are no longer supported.");
-            throw new ApiException(AppErrorCode.OPERATION_NOT_SUPPORTED);
-        }
+//        if (appJwtToken.uri().startsWith("/valefood/users")) {
+//            log.info("Read all restaurants are no longer supported.");
+//            throw new ApiException(AppErrorCode.OPERATION_NOT_SUPPORTED);
+//        }
     }
 
     private boolean isJwtAuthRequired(String method, String uri) {

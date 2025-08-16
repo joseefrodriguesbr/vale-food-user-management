@@ -1,5 +1,7 @@
 package br.inatel.pos.dm111.vfu.publisher;
 
+import java.util.List;
+
 import br.inatel.pos.dm111.vfu.persistence.user.User;
 
 public interface AppPublisher {
@@ -10,7 +12,8 @@ public interface AppPublisher {
     }
 
     default UserEvent buildUserEvent(User user) {
-        return new UserEvent(user.id(), user.name(), user.email(), user.type().name());
+        return new UserEvent(user.id(), user.name(), user.email(), user.password(), user.type().name(), user.preferredCategories());
+        
     }
     boolean publishCreated(User user);
 }

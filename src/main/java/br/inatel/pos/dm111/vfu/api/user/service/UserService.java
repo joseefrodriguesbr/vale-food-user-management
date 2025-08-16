@@ -106,16 +106,16 @@ public class UserService {
         var encryptedPwd = encryptor.encrypt(request.password());
         var userId = UUID.randomUUID().toString();
 
-        return new User(userId, request.name(), request.email(), encryptedPwd, User.UserType.valueOf(request.type()));
+        return new User(userId, request.name(), request.email(), encryptedPwd, User.UserType.valueOf(request.type()), request.preferredCategories());
     }
 
     private User buildUser(UserRequest request, String id) {
         var encryptedPwd = encryptor.encrypt(request.password());
-        return new User(id, request.name(), request.email(), encryptedPwd, User.UserType.valueOf(request.type()));
+        return new User(id, request.name(), request.email(), encryptedPwd, User.UserType.valueOf(request.type()), request.preferredCategories());
     }
 
     private UserResponse buildUserResponse(User user) {
-        return new UserResponse(user.id(), user.name(), user.email(), user.type().name());
+        return new UserResponse(user.id(), user.name(), user.email(), user.type().name(), user.preferredCategories());
     }
 
     private List<User> retrieveUsers() throws ApiException {
