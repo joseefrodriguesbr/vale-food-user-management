@@ -14,7 +14,7 @@ jose.rodrigues@pg.inatel.br, jose.e.f.rodrigues.br@gmail.com
 Microserviço em Java/Spring Boot que expõe um CRUD (create, read, update e delete) para a entidade User.
 
 ### Requisitos atendidos:
-✅ **O serviço de users expondo API para que os usuários consigam buscar as "novidades" (Novo Requisito)**
+✅ **Serviço de users expondo API para que os usuários consigam buscar as "novidades" (Novo Requisito)**
 
 ✅ CRUD (create, read, update e delete) para a entidade Promotion
 
@@ -39,16 +39,11 @@ https://github.com/joseefrodriguesbr/vale-food-restaurant-management
 
 ### ⚙️ Porta da API: 8080
 
-### ⚙️ Variáveis importantes em application.properties:
+### ⚙️ APIs para comunicação e cache:
 ```
-spring.application.name=vfu
-spring.profiles.active=test
-
 vale-food.restaurant.url=http://localhost:8081/valefood/users
 vale-food.auth.url=http://localhost:8082/valefood/users
 vale-food.promo.url=http://localhost:8083/valefood/users
-
-server.port=8080
 ```
 
 ### ⚙️ Rotas:
