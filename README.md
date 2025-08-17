@@ -13,8 +13,17 @@ jose.rodrigues@pg.inatel.br, jose.e.f.rodrigues.br@gmail.com
 ## 📌 Implementação
 Microserviço em Java/Spring Boot que expõe um CRUD (create, read, update e delete) para a entidade User.
 
-### Requisitos adicionados:
-✅ O serviço de users expondo API para que os usuários consigam buscar as "novidades" sobre promoções
+### Requisitos atendidos:
+✅ **O serviço de users expondo API para que os usuários consigam buscar as "novidades" (Novo Requisito)**
+
+✅ CRUD (create, read, update e delete) para a entidade Promotion
+
+✅ Operações expostas via REST seguindo os padrões HTTP para request e response
+
+✅ Rotas do CRUD exigindo o token gerado pelo auth
+
+✅ Projeto seguindo o padrão de rotas e controllers para as operações
+
 
 ## 📌 Repositórios relacionados
 ### vale-food-auth:
