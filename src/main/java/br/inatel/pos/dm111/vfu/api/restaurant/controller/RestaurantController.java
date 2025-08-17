@@ -55,7 +55,7 @@ public class RestaurantController {
     public ResponseEntity<RestaurantResponse> postRestaurant(@RequestBody RestaurantRequest request,
                                                  BindingResult bindingResult)
             throws ApiException {
-        log.debug("Received request to create a new user...");
+        log.debug("Received request to create a new Restaurant on cache...");
 
         validateRequest(request, bindingResult);
         var response = service.createRestaurant(request);
@@ -70,7 +70,7 @@ public class RestaurantController {
                                                 @PathVariable("restaurantId") String restaurantId,
                                                 BindingResult bindingResult)
             throws ApiException {
-        log.debug("Received request to update an user...");
+        log.debug("Received request to update an Restaurant...");
 
         validateRequest(request, bindingResult);
 

@@ -1,32 +1,45 @@
 package br.inatel.pos.dm111.vfu.api.user.controller;
 
-import br.inatel.pos.dm111.vfu.api.core.ApiException;
-import br.inatel.pos.dm111.vfu.api.core.AppError;
-import br.inatel.pos.dm111.vfu.api.user.UserRequest;
-import br.inatel.pos.dm111.vfu.api.user.UserResponse;
-import br.inatel.pos.dm111.vfu.api.user.service.UserService;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ValidationUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import br.inatel.pos.dm111.vfu.api.core.ApiException;
+import br.inatel.pos.dm111.vfu.api.core.AppError;
+import br.inatel.pos.dm111.vfu.api.promo.PromotionResponse;
+import br.inatel.pos.dm111.vfu.api.promo.service.PromotionService;
+import br.inatel.pos.dm111.vfu.api.user.UserRequest;
+import br.inatel.pos.dm111.vfu.api.user.UserResponse;
+import br.inatel.pos.dm111.vfu.api.user.service.UserService;
 
 @RestController
 @RequestMapping("/valefood/users")
 public class UserController {
 
+
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private final UserRequestValidator validator;
     private final UserService service;
+    private final PromotionService promotionService;
 
-    public UserController(UserRequestValidator validator, UserService service) {
+    public UserController(UserRequestValidator validator, UserService service, PromotionService promotionService) {
         this.validator = validator;
         this.service = service;
+        this.promotionService = promotionService;
     }
 
     @GetMapping
@@ -93,6 +106,28 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .build();
+    }
+    
+//    @GetMapping("/allpromotions")
+//    public ResponseEntity<List<PromotionResponse>> listAllPromotions() throws ApiException {
+//        log.info("Received request to list all promotions.");
+//
+//        var response = promotionService.listAllPromotions();
+//
+//        return ResponseEntity
+//                .status(HttpStatus.OK)
+//                .body(response);
+//    }
+
+    @GetMapping("{userId}/recommmendedpromotions")
+    public ResponseEntity<List<PromotionResponse>> listPromotionsByInterest(@PathVariable("userId") String userId) throws ApiException {
+        log.info("Received request to list promotions by interest for user with id: {}", userId);
+
+        var response = promotionService.listPromotionsByInterest(userId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
     }
 
     private void validateRequest(UserRequest request, BindingResult bindingResult) throws ApiException {

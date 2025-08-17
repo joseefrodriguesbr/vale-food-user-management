@@ -1,5 +1,13 @@
 package br.inatel.pos.dm111.vfu.api.restaurant.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import br.inatel.pos.dm111.vfu.api.core.ApiException;
 import br.inatel.pos.dm111.vfu.api.core.AppErrorCode;
 import br.inatel.pos.dm111.vfu.api.restaurant.ProductRequest;
@@ -11,14 +19,6 @@ import br.inatel.pos.dm111.vfu.persistence.restaurant.Restaurant;
 import br.inatel.pos.dm111.vfu.persistence.restaurant.RestaurantRepository;
 import br.inatel.pos.dm111.vfu.persistence.user.User;
 import br.inatel.pos.dm111.vfu.persistence.user.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 @Service
 public class RestaurantService {
@@ -110,8 +110,8 @@ public class RestaurantService {
     }
 
     private Restaurant buildRestaurant(RestaurantRequest request) {
-        var id = UUID.randomUUID().toString();
-        return buildRestaurant(request, id);
+        //var id = UUID.randomUUID().toString();
+        return buildRestaurant(request, request.id());
     }
 
     private Restaurant buildRestaurant(RestaurantRequest request, String id) {
@@ -128,9 +128,9 @@ public class RestaurantService {
     }
 
     private Product buildProduct(ProductRequest request) {
-        var id = UUID.randomUUID().toString();
+        //var id = UUID.randomUUID().toString();
 
-        return new Product(id,
+        return new Product(request.id(),
                 request.name(),
                 request.description(),
                 request.category(),

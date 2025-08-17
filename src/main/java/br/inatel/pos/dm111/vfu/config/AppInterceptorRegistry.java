@@ -12,9 +12,7 @@ public class AppInterceptorRegistry implements WebMvcConfigurer {
 
     private static final List<String> ENDPOINTS_PATTERN = List.of(
             "/valefood/users**",
-            "/valefood/users/**",
-            "/valefood/restaurants**",
-            "/valefood/restaurants/**"
+            "/valefood/users/**"
             );
 
     private final AuthenticationInterceptor interceptor;
