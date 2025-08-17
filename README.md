@@ -77,52 +77,6 @@ As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT
   * **:IdPromocao** : Id do usuário a ser deletado
 
 
-🌐 **GET /valefood/users**
-* **Descrição:** Lista todos os usuários cadastrados
-* **Body esperado(exemplo):**
-```
-[
-    {
-        "id": "e230565e-efe2-4efd-ac0a-26b9f1635744",
-        "name": "ed",
-        "email": "ed@inatel.br",
-        "type": "REGULAR",
-        "preferredCategories": [
-            "Massas",
-            "Salgados"
-        ]
-    },
-    {
-        "id": "6fc24b41-cec3-4e6d-9df1-feb0619f1682",
-        "name": "ana",
-        "email": "ana@inatel.br",
-        "type": "RESTAURANT",
-        "preferredCategories": [
-            "Massas",
-            "Carnes"
-        ]
-    }
-]
-```
-
-🌐 **GET /valefood/users/:IdUser**  
-* **Descrição:** Consulta uma usuário por Id.
-* * **Parâmetro de rota:**  
-  * **:IdPromocao** : Id do usuário a ser consultado
-* **Body esperado(exemplo):**
-```
-{
-    "id": "e230565e-efe2-4efd-ac0a-26b9f1635744",
-    "name": "ed",
-    "email": "ed@inatel.br",
-    "type": "REGULAR",
-    "preferredCategories": [
-        "Massas",
-        "Salgados"
-    ]
-}
-```
-
 🌐 **GET valefood/users/:IdUser/recommmendedpromotions**  
 * **Descrição:** Consulta promoções recomendadas para usuário informado.
 * * **Parâmetro de rota:**  
@@ -172,7 +126,51 @@ As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT
 ]
 ``` 
 
+🌐 **GET /valefood/users**
+* **Descrição:** Lista todos os usuários cadastrados
+* **Body esperado(exemplo):**
+```
+[
+    {
+        "id": "e230565e-efe2-4efd-ac0a-26b9f1635744",
+        "name": "ed",
+        "email": "ed@inatel.br",
+        "type": "REGULAR",
+        "preferredCategories": [
+            "Massas",
+            "Salgados"
+        ]
+    },
+    {
+        "id": "6fc24b41-cec3-4e6d-9df1-feb0619f1682",
+        "name": "ana",
+        "email": "ana@inatel.br",
+        "type": "RESTAURANT",
+        "preferredCategories": [
+            "Massas",
+            "Carnes"
+        ]
+    }
+]
+```
 
+🌐 **GET /valefood/users/:IdUser**  
+* **Descrição:** Consulta uma usuário por Id.
+* * **Parâmetro de rota:**  
+  * **:IdPromocao** : Id do usuário a ser consultado
+* **Body esperado(exemplo):**
+```
+{
+    "id": "e230565e-efe2-4efd-ac0a-26b9f1635744",
+    "name": "ed",
+    "email": "ed@inatel.br",
+    "type": "REGULAR",
+    "preferredCategories": [
+        "Massas",
+        "Salgados"
+    ]
+}
+```
 
 ## 🛠️ IDE
 - **Eclipse IDE for Enterprise Java and Web Developers - Version: 2025-03 (4.35.0) Build id: 20250306-0812**
