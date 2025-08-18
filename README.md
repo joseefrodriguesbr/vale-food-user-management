@@ -60,8 +60,8 @@ vale-food.promo.url=http://localhost:8083/valefood/users
     "preferredCategories":["Massas","Carnes"]
 }
 ```
-🔐 **Rotas protegidas** (autenticação JWT):  
-As rotas abaixo estão dentro do prefixo /estoque, e requerem autenticação JWT.  
+🔐 **Rotas protegidas**:  
+As rotas abaixo requerem autenticação JWT.  
 
 🌐 **PUT /valefood/users/:IdUser**  
 * **Descrição:** Atualiza um usuário
