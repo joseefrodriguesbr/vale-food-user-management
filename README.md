@@ -39,7 +39,7 @@ https://github.com/joseefrodriguesbr/vale-food-restaurant-management
 
 ### ⚙️ Porta da API: 8080
 
-### ⚙️ APIs para comunicação e cache:
+### ⚙️ APIs para comunicação externa e cache:
 ```
 vale-food.restaurant.url=http://localhost:8081/valefood/users
 vale-food.auth.url=http://localhost:8082/valefood/users
