@@ -25,7 +25,7 @@ Microserviço em Java/Spring Boot que expõe um CRUD (create, read, update e del
 ✅ Projeto seguindo o padrão de rotas e controllers para as operações
 
 
-## 📌 Repositórios relacionados
+## 📌 Repositórios relacionados necessários para a execução
 ### vale-food-auth:
 https://github.com/joseefrodriguesbr/vale-food-auth
 
