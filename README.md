@@ -88,7 +88,7 @@ As rotas abaixo requerem autenticação JWT.
 * **Descrição:** Consulta promoções recomendadas para usuário informado.
 * * **Parâmetro de rota:**  
   * **:IdUser** : Id do usuário a filtrar promoções recomendadas de acordo com as preferências 
-* **Resposta esperado(exemplo):**
+* **Resposta esperada(exemplo):**
 ``` 
 [
     {
@@ -135,7 +135,7 @@ As rotas abaixo requerem autenticação JWT.
 
 🌐 **GET /valefood/users**
 * **Descrição:** Lista todos os usuários cadastrados
-* **Resposta esperado(exemplo):**
+* **Resposta esperada(exemplo):**
 ```
 [
     {
@@ -165,7 +165,7 @@ As rotas abaixo requerem autenticação JWT.
 * **Descrição:** Consulta uma usuário por Id.
 * * **Parâmetro de rota:**  
   * **:IdPromocao** : Id do usuário a ser consultado
-* **Resposta esperado(exemplo):**
+* **Resposta esperada(exemplo):**
 ```
 {
     "id": "e230565e-efe2-4efd-ac0a-26b9f1635744",
